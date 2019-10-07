@@ -1,0 +1,55 @@
+body {
+    background-color: #779ef7;
+}
+
+h1 {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    background-color: #3533a1;
+    color: white;
+}
+
+#column1 {
+    margin: 0 auto;
+    width: 60%;
+    text-align: center;
+}
+
+#professional_goal {
+    padding: 25px;
+}
+figcaption {
+    font-style: oblique;
+}
+
+#work_history {
+    color: #030303;
+}
+
+div div img {
+    max-width: 75%;
+    height: auto;
+}
+
+h3 {
+    color: white;
+    margin: 0px;
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+h4 {
+    color: white;
+    margin: 0px;
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+div ul {
+    text-align: left;
+    padding-bottom: 30px;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 16px;
+    font-style: oblique;
+}
