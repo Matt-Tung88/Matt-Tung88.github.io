@@ -1,0 +1,84 @@
+const express = require('express');
+const fetch = require('node-fetch');
+
+const app = express();
+const port = 3000;
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+/*
+ * The 'express.static' middleware provides some services Express can use to
+ * serve files from a directory - in this case, the 'public' subdirectory of
+ * this project.
+ *
+ * The 'app.use' function attaches middleware to our Express application, so
+ * that when the application is running, it can serve static files. In this
+ * case, we mount it over the entire app: any web request that GETs a path that
+ * exists in the 'public' directory will be handled by the middleware. The
+ * middleware also serves the 'index.html' file in a directory (if it exists)
+ * whenever a client requests the directory itself.
+ *
+ * The 'public' directory for this project, in turn, contains all the HTML,
+ * Javascript, and CSS files needed to run a simple chat client connected to
+ * this server. Accessing this server's root URL will serve 'public/index.html',
+ * which contains our chat client. This gives users an easy way to connect to
+ * the server and interact with other users.
+ *
+ * See also:
+ *  - Express: Serving static files in Express
+ *    https://expressjs.com/en/starter/static-files.html
+ *  - Express: express.static()
+ *    https://expressjs.com/en/4x/api.html#express.static
+ *  - Express: Using middleware
+ *    https://expressjs.com/en/guide/using-middleware.html
+ *  - Express: app.use()
+ *    https://expressjs.com/en/4x/api.html#app.use
+ */
+app.use(express.static('public'));
+
+// this is a single route, in the simplest possible format
+// the simplest format is not necessarily the best one.
+// this is, right now, an introduction to Callback Hell
+// but it is okay for a first-level example
+app.get('/api', (req, res) => {
+  const baseURL = 'https://api.umd.io/v0/courses/list';
+  fetch(baseURL)
+    .then((r) => r.json())
+    .then((data) => {
+      console.log(data);
+      res.send({ data: data });
+    })
+
+  //   .then(data => {
+  //     const courseArray = data.map(c => `${c.course_id} ${c.name}`);
+  //     makeListInHTML(courseArray);
+
+  //     return data;
+  //   })
+
+  //   .then(data => {
+  //     const INST_course = data.filter(f => f.course_id.includes('INST'));
+  //     makeListInHTML(routeAndTitleArray);
+  //     return data;
+
+  //   })
+  // function makeListInHTML(array) {
+  //   const htmlTarget = document.querySelector('.content');
+  //   htmlTarget.innerHTML = '';
+  //   let el1 = document.createElement("ul");
+  //   el1.className = 'list';
+  //   htmlTarget.appendChild(el1);
+  //   for (let i = 0; i < array.length; i++) {
+  //     let el = document.createElement("li");
+  //     el.innerText = array[i];
+  //     htmlTarget.appendChild(el);
+  //   };
+  // }
+    .catch((err) => {
+      console.log(err);
+      res.redirect('/error');
+    });
+});
+
+app.listen(port, () => console.log(`Example app listening on port ${3000}!`));
